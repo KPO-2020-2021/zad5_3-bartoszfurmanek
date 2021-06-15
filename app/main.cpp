@@ -7,170 +7,196 @@
 #endif
 
 #include <iostream>
-#include <iomanip>
 #include <stdlib.h>
-#include <fstream>
-#include <string>
-
+#include "lacze_do_gnuplota.hh"
+#include "Scena.hh"
 #include "exampleConfig.h"
-#include "example.h"
-#include "vector.hh"
-#include "matrix.hh"
-#include "../inc/lacze_do_gnuplota.hh"
-
-/*!
- * Simple main program that demontrates how access
- * CMake definitions (here the version number) from source code.
- * 
- * EDIT: dodane kreowanie wektorow i macierzy plus obsluga lacza do gnuplota
- */
-
-#define DL_KROTKI_BOK  100
-#define DL_DLUGI_BOK   150
-
-/*!
- * Przyklad zapisu wspolrzednych zbioru punktow do strumienia wyjściowego.
- * Dane sa odpowiednio sformatowane, tzn. przyjęto notację stałoprzecinkową
- * z dokładnością do 10 miejsca po przecinku. Szerokość wyświetlanego pola 
- * to 16 miejsc, sposób wyrównywania - do prawej strony.
- * \param[in] StrmWy - strumien wyjsciowy, do ktorego maja zostac zapisane
- *                     kolejne wspolrzedne.
- * \param[in] Przesuniecie - ten parameter jest tylko po to, aby pokazać
- *                          mozliwosc zmiany wspolrzednych i prostokata
- *                          i zmiane jego polorzenia na okienku graficznym
- *                         rysownym przez gnuplota.
- * \retval true - gdy operacja zapisu powiodła się,
- * \retval false - w przypadku przeciwnym.
- */
-void PrzykladZapisuWspolrzednychDoStrumienia( std::ostream&     StrmWy, 
-                                              double       Przesuniecie
-                                            )
-{
-   //---------------------------------------------------------------
-   // To tylko przyklad !!!
-   // W programie nalezy uzywać pojęcia wektora, a nie oddzielnych 
-   // zmiennych do reprezentowania wspolrzednych!
-   //
-  double  x1, y1, x2, y2, x3, y3, x4, y4; 
-
-  x1 = y1 = 10;
-  x2 = x1 + DL_DLUGI_BOK;  y2 = y1;
-  x3 = x2;  y3 = y2 + DL_KROTKI_BOK;
-  x4 = x3 - DL_DLUGI_BOK; y4 = y3;
-
-
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << x1+Przesuniecie 
-         << std::setw(16) << std::fixed << std::setprecision(10) << y1+Przesuniecie << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << x2+Przesuniecie 
-         << std::setw(16) << std::fixed << std::setprecision(10) << y2+Przesuniecie << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << x3+Przesuniecie 
-         << std::setw(16) << std::fixed << std::setprecision(10) << y3+Przesuniecie << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << x4+Przesuniecie 
-         << std::setw(16) << std::fixed << std::setprecision(10) << y4+Przesuniecie << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << x1+Przesuniecie 
-         << std::setw(16) << std::fixed << std::setprecision(10) << y1+Przesuniecie << std::endl; 
-                             // Jeszcze raz zapisujemy pierwszy punkt,
-                             // aby gnuplot narysowal zamkniętą linię.
-}
 
 
 
-/*!
- * Przyklad zapisu wspolrzednych zbioru punktow do pliku, z ktorego
- * dane odczyta program gnuplot i narysuje je w swoim oknie graficznym.
- * \param[in] sNazwaPliku - nazwa pliku, do którego zostana zapisane
- *                          wspolrzędne punktów.
- * \param[in] Przesuniecie - ten parameter jest tylko po to, aby pokazać
- *                          mozliwosc zmiany wspolrzednych i prostokata
- *                          i zmiane jego polorzenia na okienku graficznym
- *                         rysownym przez gnuplota.
- * \retval true - gdy operacja zapisu powiodła się,
- * \retval false - w przypadku przeciwnym.
- */
-bool PrzykladZapisuWspolrzednychDoPliku( const char  *sNazwaPliku,
-                                         double       Przesuniecie
-                                       )
-{
-  std::ofstream  StrmPlikowy;
-
-  StrmPlikowy.open(sNazwaPliku);
-  if (!StrmPlikowy.is_open())  {
-    std::cerr << ":(  Operacja otwarcia do zapisu \"" << sNazwaPliku << "\"" << std::endl
-	 << ":(  nie powiodla sie." << std::endl;
-    return false;
-  }
-
-  PrzykladZapisuWspolrzednychDoStrumienia(StrmPlikowy, Przesuniecie);
-
-  StrmPlikowy.close();
-  return !StrmPlikowy.fail();
-}
 
 int main() {
-  std::cout << "Project Rotation 2D based on C++ Boiler Plate v"
-            << PROJECT_VERSION_MAJOR /*duże zmiany, najczęściej brak kompatybilności wstecz */
-            << "."
-            << PROJECT_VERSION_MINOR /* istotne zmiany */
-            << "."
-            << PROJECT_VERSION_PATCH /* naprawianie bugów */
-            << "."
-            << PROJECT_VERSION_TWEAK /* zmiany estetyczne itd. */
-            << std::endl;
-  // std::system("cat ../LICENSE");
-  // do zadania Rotacja 2D
-  std::cout << "Vector:" << std::endl;
-  Vector tmpV1 = Vector();
-  std::cout << "Vector - konstruktor bezparametryczny:\n" << tmpV1 << std::endl;
-  double argumentsV[] = {1.0, 2.0};
-  Vector tmpV2 = Vector(argumentsV);
-  std::cout << "Vector - konstruktor parametryczny:\n" << tmpV2 << std::endl;
 
-  std::cout << "Matrix:" << std::endl;
-  Matrix tmpM1 = Matrix();
-  std::cout << "Matrix - konstruktor bezparametryczny:\n" << tmpM1 << std::endl;
-  double argumentsM[][SIZE] = {{1.0, 2.0},{3.0, 4.0}};
-  Matrix tmpM2 = Matrix(argumentsM);
-  std::cout << "Matrix - konstruktor parametryczny:\n" << tmpM2 << std::endl;
 
-    PzG::LaczeDoGNUPlota  Lacze;  // Ta zmienna jest potrzebna do wizualizacji
-                                // rysunku prostokata
+    Scena Sc;                                               //Scena dla dronow
+    char Opcja;                                             //Wybor w menu programu
+    int WybranyDron;                                        //Numer aktywnego dron
+    int KoniecPetli=0;
+    double Kat;                                             //Kat obrotu drona
+    double Odleglosc;                                       //Odleglosc na jaka dron poleci
+    double x,y;                                                //Wspolrzedne x i y
+    Wektor3D Skala;                                         //wielkosci skalowania obiektow
+    std::string NazwaObiektu;                                //Nazwa dodawanego obiektu
+    int NumerObiektu=0;
 
-   //-------------------------------------------------------
-   //  Wspolrzedne wierzcholkow beda zapisywane w pliku "prostokat.dat"
-   //  Ponizsze metody powoduja, ze dane z pliku beda wizualizowane
-   //  na dwa sposoby:
-   //   1. Rysowane jako linia ciagl o grubosci 2 piksele
-   //
-  Lacze.DodajNazwePliku("../datasets/prostokat.dat",PzG::RR_Ciagly,2);
-   //
-   //   2. Rysowane jako zbior punktow reprezentowanych przez kwadraty,
-   //      których połowa długości boku wynosi 2.
-   //
-  Lacze.DodajNazwePliku("../datasets/prostokat.dat",PzG::RR_Punktowy,2);
-   //
-   //  Ustawienie trybu rysowania 2D, tzn. rysowany zbiór punktów
-   //  znajduje się na wspólnej płaszczyźnie. Z tego powodu powoduj
-   //  jako wspolrzedne punktow podajemy tylko x,y.
-   //
-  Lacze.ZmienTrybRys(PzG::TR_2D);
+    Sc.DodajDrona({20,20,0}, 0, "Dron1");                //Dodanie dronow do scemy
+    Sc.DodajDrona({20,100,0}, 0, "Dron2");
 
-  PrzykladZapisuWspolrzednychDoStrumienia(std::cout,0);
-  if (!PrzykladZapisuWspolrzednychDoPliku("../datasets/prostokat.dat",0)) return 1;
-  Lacze.Rysuj(); // <- Tutaj gnuplot rysuje, to co zapisaliśmy do pliku
-  std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
-  std::cin.ignore(100000,'\n');
-   //----------------------------------------------------------
-   // Ponownie wypisuje wspolrzedne i rysuje prostokąt w innym miejscu.
-   //
-  PrzykladZapisuWspolrzednychDoStrumienia(std::cout,50);
-  if (!PrzykladZapisuWspolrzednychDoPliku("../datasets/prostokat.dat",50)) return 1;
-  Lacze.Rysuj(); // <- Tutaj gnuplot rysuje, to co zapisaliśmy do pliku
-  std::cout << "Naciśnij ENTER, aby kontynuowac" << std::endl;
-  std::cin.ignore(100000,'\n');
+    Sc.DodajPrzeszkode(1, {100,100,0}, 45, {10,10,5}, "Plaskowyz1");
+    Sc.DodajPrzeszkode(2, {50,150,0}, 270, {10,40,40}, "GoraZGrania1");
+    Sc.DodajPrzeszkode(3, {150,50,0}, 60, {20,20,100}, "GoraZeszczytem1");
+    Sc.DodajPrzeszkode(3, {180,180,0}, 0, {10,10,50}, "GoraZeSzczytem2");
+    
+    Sc.NumerAktywnegoDrona()=1;                            //Domyslnie dron pierwszy jest aktywny
 
-  // Z bazy projektu-wydmuszki Boiler Plate C++:
-  // Bring in the dummy class from the example source,
-  // just to show that it is accessible from main.cpp.
-  Dummy d = Dummy();
-  return d.doSomething() ? 0 : -1;
+    std::cout << std::endl;                                //Wyswietlenie menu
+    std::cout << "Polozenie aktywnego drona (x,y): ";
+    std::cout << Sc.AktywnyDron()->WspolPolozenia()[0];
+    std::cout << " ";
+    std::cout << Sc.AktywnyDron()->WspolPolozenia()[1];
+    std::cout << std::endl << std::endl;
+    std::cout << "a - wybierz aktywnego drona" << std::endl;
+    std::cout << "p - zadaj parametry przelotu" << std::endl;
+    std::cout << "o - zadaj parametry lotu po okregu" << std::endl;
+    std::cout << "d - dodaj obiekt do sceny" << std::endl;
+    std::cout << "u - usun obiekt ze sceny" << std::endl;
+    std::cout << "m - wyswietl menu" << std::endl;
+    std::cout << std::endl << "k - koniec programu"<< std::endl;
+    
+    while(1)
+      {
+        std::cout << std::endl << "Aktualna ilosc wektorow: " << Wektor3D::WezIloscAktualna() << std::endl;
+        std::cout << "Ogolna Ilosc wektorow: " << Wektor3D::WezIloscOgolna() << std::endl;
+        std::cout << std::endl << "Twoj wybor (m - menu) -> ";
+        std::cin >> Opcja;
+        std::cin.ignore(100000,'\n');
+        switch(Opcja)
+          {
+          case 'a':                                       //Wybor aktywnego drona
+            {
+            std::cout << std::endl << "Wybor aktywnego drona" << std::endl << std::endl;
+              Sc.ListaDronow();
+              KoniecPetli=0;
+              while(!KoniecPetli)
+                {
+                std::cout << "Wybierz numer drona: ";
+                std::cin >> WybranyDron;
+                std::cin.ignore(100000,'\n');
+                if(WybranyDron <=0 || WybranyDron>2)
+                  {
+                  std::cout << "Zly numer drona. Sprobuj ponownie" << std::endl;
+                  }
+                else
+                  {
+                  Sc.NumerAktywnegoDrona()=WybranyDron;
+                  KoniecPetli=1;
+                  }
+                }
+                std::cout << std::endl;                                //Polozenia aktywnego drona
+                std::cout << "Polozenie aktywnego drona (x,y): ";
+                std::cout << Sc.AktywnyDron()->WspolPolozenia()[0];
+                std::cout << " ";
+                std::cout << Sc.AktywnyDron()->WspolPolozenia()[1];
+                std::cout << std::endl << std::endl;
+              break;
+            }
+          case 'p':                                       //Przelot drona
+            {
+            std::cout << std::endl << "Podaj kierunek lotu (Kat):";
+            std::cin >> Kat;
+            std::cin.ignore(100000,'\n');
+            std::cout << "Podaj odleglosc lotu: ";
+            std::cin >> Odleglosc;
+            std::cin.ignore(100000,'\n');
+            std::cout << std::endl;
+
+            while(Kat<=-360 || Kat>=360)            //Usuniecie okresow kata
+              {
+              if(Kat<=-360)
+                {
+                Kat+=360;
+                }
+              if(Kat>=360)
+                {
+                Kat-=360;
+                }    
+              }
+            Sc.PrzemiescDrona(Odleglosc, Kat);
+            break;
+            }
+          case 'o':                                       //Przelot drona
+            {
+            std::cout << "Podaj promien okregu po ktorym ma przeleciec dron: ";
+            std::cin >> Odleglosc;
+            std::cin.ignore(100000,'\n');
+            std::cout << std::endl;
+
+            Sc.RuchPoOkregu(Odleglosc);
+            break;
+            }
+          case 'm':
+            {
+            std::cout << std::endl << std::endl;
+            std::cout << "a - wybierz aktywnego drona" << std::endl;
+            std::cout << "p - zadaj parametry przelotu" << std::endl;
+            std::cout << "o - zadaj parametry lotu po okregu" << std::endl;
+            std::cout << "m - wyswietl menu" << std::endl;
+            std::cout << "d - dodaj obiekt do sceny" << std::endl;
+            std::cout << "u - usun obiekt ze sceny" << std::endl;
+            std::cout << std::endl << "k - koniec programu"<< std::endl << std::endl;
+            break;
+            }
+          case 'd':
+            {
+            std::cout << std::endl << "Wybierz rodzaj obiektu" << std::endl << std::endl;
+            std::cout << "1 - Plaskowyz" << std::endl;
+            std::cout << "2 - Gora z grania" << std::endl;
+            std::cout << "3 - Gora ze szczytem" << std::endl << std::endl;
+            std::cout << "Numer obiektu: ";
+            std::cin >> NumerObiektu;
+            std::cin.ignore(100000,'\n');
+            if(NumerObiektu < 1 || NumerObiektu > 3)
+              {
+              std::cout << "Zly numer obiektu" << std::endl;
+              break;
+              }
+            std::cout << "Podaj Wspolrzedne polozenia obiekty (x,y): ";
+            std::cin >> x >> y;
+            std::cin.ignore(100000,'\n');
+            std::cout << "Podaj kat obrotu bryly: ";
+            std::cin >> Kat;
+            std::cin.ignore(100000,'\n');
+            std::cout << "Podaj skale OX, OY, OZ: ";
+            std::cin >> Skala;
+            std::cin.ignore(100000,'\n');
+            std::cout << "Podaj nazwe obiektu: ";
+            std::cin >> NazwaObiektu;
+            if(Sc.DodajPrzeszkode(NumerObiektu, {x,y,0}, Kat, Skala, NazwaObiektu))
+              {
+              std::cout << std::endl << "Element został dodany do sceny" << std::endl << std::endl;
+              }
+            else
+              {
+              std::cout << std::endl << std::endl << "Obiekt o takim numerze nie istnieje" << std::endl; 
+              }
+            break;
+            }
+          case 'u':
+            {
+            Sc.ListaPrzeszkod();
+            std::cout << std::endl << "Podaj numer obiektu, ktory ma zostac usuniety: ";
+            std::cin >> NumerObiektu;
+            std::cin.ignore(100000,'\n');
+            if(Sc.UsunPrzeszkode(NumerObiektu))
+              {
+              std::cout << std::endl << std::endl << "Udalo sie usunac obiekt" << std::endl;
+              }
+            else
+              {
+              std::cout << std::endl << std::endl << "Nie udalo sie usunac obiekt" << std::endl; 
+              }
+            break;
+            }
+          case 'k':
+            {
+            std::cout << std::endl << "Koniec Programu" <<std::endl;
+            return 0;
+            }
+          default:
+            {
+            std::cout << std::endl << "Nieznana opcja" << std::endl;
+            }
+          }
+      }
+return 0;
 }
