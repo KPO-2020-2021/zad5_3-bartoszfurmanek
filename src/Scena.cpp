@@ -196,7 +196,7 @@ switch(NumerPrzeszkody)
             }
         case 3:
             {
-            ListaObiektow.push_back(std::make_shared<GoraZeSzczytem>(Polozenie,Kat,("../data/" + NazwaPrzeszkody + ".dat"),"../BrylyWzorcowe/GraniastoslupWzorcowy.dat",Skala));
+            ListaObiektow.push_back(std::make_shared<GoraZeSzczytem>(Polozenie,Kat,("../data/" + NazwaPrzeszkody + ".dat"),"../BrylyWzorcowe/ProstopadloscianWzorcowy.dat",Skala));
             (*this).DodajNazwePliku(("../data/" + NazwaPrzeszkody + ".dat"));
             return true;
             }

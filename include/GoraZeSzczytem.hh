@@ -18,7 +18,7 @@
 /*!
  * \brief Klasa GoraZeSzczytem.
  *
- * Klasa reprezentucja gore ze szczytem, ktora jest swojego rodzaju przeksztalceniem klasy graniastoslup. 
+ * Klasa reprezentucja gore ze szczytem, ktora jest swojego rodzaju przeksztalceniem klasy prostopadloscian. 
  * Jego punkty sa reprezentowane przez tablice wektorow 3D, gdzie jeden wektor to dany punkt.
  * Gora posiada zmienna informujaca o jego polozniu, oraz o koncie orietnacji
  * wzgledem osi Z. Gora mozna przesuwac oraz obracac. Kazda bryla
@@ -31,14 +31,14 @@ class GoraZeSzczytem: public BrylaGeometryczna, public ObiektSceny{
 /*!
  * \brief Wierzcholki
  *
- * Atrybut modeluje 12 wierzcholkow graniastoslupu (gory ze szczytem) oraz 12 dodatkowych
- * punktow, ktore sluza do rysowania scian gory ze szczytem. Wierzcholki i punkty 
- * sa przedstawione w formie tablicy wektorow3D. Elementy o indeksach 
- * 1,2,5,6,9,10,13,14,17,18,21,22 reczywistymi wierzcholkami graniastoslupu, 
- * pozostale elemnty to punkty dodatkowe.
+ * Atrybut modeluje 8 wierzcholkow prostopadloscianu (gory ze szczytem) oraz 8 dodatkowych
+ * punktow, ktore sluza do rysowania scian prostopadloscianu
+ * w gnuplocie. Wierzcholki i punkty sa przedstawione w formie tablicy
+ * wektorow3D. Elementy o indeksach 1,2,5,6,9,10,13,14 reczywistymi wierzcholkami
+ * prostopadloscianu, pozostale elemnty to punkty dodatkowe
  *
  */
-Wektor3D Wierzcholek[24];
+Wektor3D Wierzcholek[16];
 
 /*!
  * \brief Polozenie

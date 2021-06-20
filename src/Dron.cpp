@@ -99,7 +99,7 @@ ObiektSceny(OB_Dron)
 Dron::Dron(Wektor3D PolozenieDrona,double Kat, std::string Nazwa):
 ObiektSceny(OB_Dron)
 {
-    Korpus = Prostopadloscian(PolozenieDrona, Kat, "../data/" + Nazwa + "_Korpus.dat", "../BrylyWzorcowe/ProstopadloscianWzorcowy.dat", Wektor3D{5,5,5});
+    Korpus = Prostopadloscian(PolozenieDrona, Kat, "../data/" + Nazwa + "_Korpus.dat", "../BrylyWzorcowe/ProstopadloscianWzorcowy.dat", Wektor3D{5,5,10});
     Rotor[0] = Graniastoslup(Korpus[1], Kat, "../data/" + Nazwa+"_Rotor1.dat", "../BrylyWzorcowe/GraniastoslupWzorcowy.dat", Wektor3D{4,4,4});
     Rotor[1] = Graniastoslup(Korpus[2], Kat, "../data/" + Nazwa+"_Rotor2.dat", "../BrylyWzorcowe/GraniastoslupWzorcowy.dat", Wektor3D{4,4,4});
     Rotor[2] = Graniastoslup(Korpus[5], Kat, "../data/" + Nazwa+"_Rotor3.dat", "../BrylyWzorcowe/GraniastoslupWzorcowy.dat", Wektor3D{4,4,4});
@@ -348,8 +348,8 @@ bool Dron::RysujTrase(double Odleglosc, double Kat, PzG::LaczeDoGNUPlota  &Lacze
         }
     
     StrmPlikowy << (*this).WspolPolozenia() << std::endl;
-    StrmPlikowy << ((*this).WspolPolozenia() + Wektor3D{0,0,60}) << std::endl;
-    StrmPlikowy << (PunktDocelowy + Wektor3D{0,0,60}) << std::endl;
+    StrmPlikowy << ((*this).WspolPolozenia() + Wektor3D{0,0,90}) << std::endl;
+    StrmPlikowy << (PunktDocelowy + Wektor3D{0,0,90}) << std::endl;
     StrmPlikowy << PunktDocelowy << std::endl;    
     
     StrmPlikowy.close();
@@ -383,7 +383,7 @@ bool Dron::RysujTrasePoOkregu(double Promien, PzG::LaczeDoGNUPlota  &LaczeDoGnup
     Wektor3D Punkt=Polozenie;
 
     StrmPlikowy << Polozenie << std::endl;
-    Punkt += Wektor3D{0,0,60};
+    Punkt += Wektor3D{0,0,90};
     StrmPlikowy << Punkt << std::endl;
     Punkt += MacierzObrotu((*this).Orientacja(), 'z') * Wektor3D{Promien,0,0};
     StrmPlikowy << Punkt << std::endl;
@@ -430,7 +430,7 @@ bool Dron::PrzemiescDrona(double Odleglosc, double Kat, PzG::LaczeDoGNUPlota  &L
         usleep(3000000);
 
         std::cout << std::endl << "Podnoszonie drona..." << std::endl;  //Podnoszenie drona
-        for(i=0; i<60; i++)
+        for(i=0; i<90; i++)
             {
             (*this).Wzniesienie(1);
             (*this).ObrotRotora(0,10);
@@ -500,7 +500,7 @@ bool Dron::PrzemiescDrona(double Odleglosc, double Kat, PzG::LaczeDoGNUPlota  &L
         
 
         std::cout << std::endl << "Opadanie drona..." << std::endl;  //Opadanie
-        for(i=0; i<60; i++)
+        for(i=0; i<90; i++)
             {
             (*this).Opadanie(1);
             (*this).ObrotRotora(0,7.5);
@@ -568,7 +568,7 @@ bool Dron::RuchPoOkregu(double Promien, PzG::LaczeDoGNUPlota  &LaczeDoGnuplota)
         usleep(3000000);
 
         std::cout << std::endl << "Podnoszonie drona..." << std::endl;  //Podnoszenie drona
-        for(i=0; i<60; i++)
+        for(i=0; i<90; i++)
             {
             (*this).Wzniesienie(1);
             (*this).ObrotRotora(0,10);
@@ -710,7 +710,7 @@ bool Dron::RuchPoOkregu(double Promien, PzG::LaczeDoGNUPlota  &LaczeDoGnuplota)
             
 
         std::cout << std::endl << "Opadanie drona..." << std::endl;  //Opadanie
-        for(i=0; i<60; i++)
+        for(i=0; i<90; i++)
             {
             (*this).Opadanie(1);
             (*this).ObrotRotora(0,7.5);

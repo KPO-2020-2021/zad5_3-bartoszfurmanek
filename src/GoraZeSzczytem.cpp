@@ -12,7 +12,7 @@
  */
 Wektor3D GoraZeSzczytem::operator [](int Indeks)const
 {
-    if(Indeks >= 24)
+    if(Indeks >= 16)
         {
         throw std::runtime_error("Blad: Zly indeks");
         }
@@ -27,7 +27,7 @@ Wektor3D GoraZeSzczytem::operator [](int Indeks)const
  */
 Wektor3D& GoraZeSzczytem::operator [](int Indeks)
 {
-    if(Indeks >= 24)
+    if(Indeks >= 16)
         {
         throw std::runtime_error("Blad: Zly indeks");
         }
@@ -95,7 +95,7 @@ Wektor3D& GoraZeSzczytem::operator [](int Indeks)
  */
 GoraZeSzczytem& GoraZeSzczytem::operator= (const GoraZeSzczytem G)
 {
-  for(int i=0; i<24; i++)
+  for(int i=0; i<16; i++)
     {
     Wierzcholek[i] = G[i];
     }
@@ -114,7 +114,7 @@ GoraZeSzczytem& GoraZeSzczytem::operator= (const GoraZeSzczytem G)
 GoraZeSzczytem::GoraZeSzczytem():
 BrylaGeometryczna(TB_GoraZeSzczytem), ObiektSceny(OB_GoraZeSzczytem), Polozenie({0,0,0}), KatOrientacji(0)
 {
-  for(int i=0; i<24; i++)
+  for(int i=0; i<16; i++)
     {
     Wierzcholek[i]={0,0,0};
     }
@@ -132,13 +132,19 @@ GoraZeSzczytem::GoraZeSzczytem(Wektor3D WspolPolozenia, double Kat, std::string 
 BrylaGeometryczna(TB_GoraZeSzczytem, Nazwa, NazwaWzorca, SkalaBryly), ObiektSceny(OB_GoraZeSzczytem), Polozenie(WspolPolozenia), KatOrientacji(Kat)
 {
 (*this).OdczytajBryleWzorcowa();
-Wierzcholek[2]= Wektor3D{0,0,1};          //Przeksztalcenie gornych wierzcholkow aby utworzyly szpiczasty szczyt gory
-Wierzcholek[6]= Wektor3D{0,0,1};
-Wierzcholek[10]= Wektor3D{0,0,1};
-Wierzcholek[14]= Wektor3D{0,0,1};
-Wierzcholek[18]= Wektor3D{0,0,1};
-Wierzcholek[22]= Wektor3D{0,0,1};
-for(int i=0; i<24; i++)
+Wierzcholek[0] = Wierzcholek[9];
+Wierzcholek[4] = Wierzcholek[9];
+Wierzcholek[8] = Wierzcholek[9];
+Wierzcholek[12] = Wierzcholek[9];
+Wierzcholek[3] = Wierzcholek[10];
+Wierzcholek[7] = Wierzcholek[10];
+Wierzcholek[11] = Wierzcholek[10];
+Wierzcholek[15] = Wierzcholek[10];
+Wierzcholek[1]=Wektor3D{0,0,1};
+Wierzcholek[2]=Wektor3D{0,0,1};
+Wierzcholek[5]=Wektor3D{0,0,1};
+Wierzcholek[6]=Wektor3D{0,0,1};
+for(int i=0; i<16; i++)
     {
     Wierzcholek[i] = (*this).Skaluj(Wierzcholek[i]);
     }
@@ -166,7 +172,7 @@ Polozenie=WspolPolozenia;
 GoraZeSzczytem::GoraZeSzczytem(const GoraZeSzczytem &G):
 BrylaGeometryczna(TB_GoraZeSzczytem, G.NazwaPlikuBryly(), G.NazwaPlikuBrylyWzorcowej(), G.SkalaBryly()), ObiektSceny(OB_GoraZeSzczytem), Polozenie(G.WspolPolozenia()), KatOrientacji(G.Orientacja())
 {
-  for(int i=0; i<24; i++)
+  for(int i=0; i<16; i++)
     {
     Wierzcholek[i] = G[i];
     }
@@ -182,7 +188,7 @@ BrylaGeometryczna(TB_GoraZeSzczytem, G.NazwaPlikuBryly(), G.NazwaPlikuBrylyWzorc
  */
 GoraZeSzczytem& GoraZeSzczytem::Obrot(double Kat, char Os)
 {
-    for(int i=0; i<24; i++)
+    for(int i=0; i<16; i++)
     {
     (*this)[i] = MacierzObrotu(Kat, Os) * (*this)[i];  //Wymnożenie każdego wierzcholka przez macierz obrotu
     }               
@@ -196,7 +202,7 @@ GoraZeSzczytem& GoraZeSzczytem::Obrot(double Kat, char Os)
  */
 GoraZeSzczytem& GoraZeSzczytem::Translacja(Wektor3D Wektor)
 {
-    for(int i=0; i<24; i++)
+    for(int i=0; i<16; i++)
     {
     (*this)[i] += Wektor;
     }
@@ -231,16 +237,6 @@ void GoraZeSzczytem::ZapisWspolrzednychDoStrumienia(std::ostream &StrmWy)const
   StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[13] << std::endl;
   StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[14] << std::endl;
   StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[15] << std::endl;
-  StrmWy << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[16] << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[17] << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[18] << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[19] << std::endl;
-  StrmWy << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[20] << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[21] << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[22] << std::endl;
-  StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[23] << std::endl;
   StrmWy << std::endl;
   StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[0] << std::endl;
   StrmWy << std::setw(16) << std::fixed << std::setprecision(10) << Wierzcholek[1] << std::endl;
@@ -278,15 +274,6 @@ StrmWej >> Wierzcholek[13];
 StrmWej >> Wierzcholek[14];
 StrmWej >> Wierzcholek[15];
 
-StrmWej >> Wierzcholek[16];
-StrmWej >> Wierzcholek[17];
-StrmWej >> Wierzcholek[18];
-StrmWej >> Wierzcholek[19];
-
-StrmWej >> Wierzcholek[20];
-StrmWej >> Wierzcholek[21];
-StrmWej >> Wierzcholek[22];
-StrmWej >> Wierzcholek[23];
 }
 
 
