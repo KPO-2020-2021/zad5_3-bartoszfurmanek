@@ -14,6 +14,14 @@ CMakeFiles/program.dir/src/Dron.cpp.o
  ../include/lacze_do_gnuplota.hh
  /home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/Dron.cpp
 CMakeFiles/program.dir/src/GoraZGrania.cpp.o
+ ../include/BrylaGeometryczna.hh
+ ../include/GoraZGrania.hh
+ ../include/Macierz.hh
+ ../include/Macierz3x3.hh
+ ../include/ObiektSceny.hh
+ ../include/Wektor.hh
+ ../include/Wektor3D.hh
+ ../include/lacze_do_gnuplota.hh
  /home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/GoraZGrania.cpp
 CMakeFiles/program.dir/src/GoraZeSzczytem.cpp.o
  ../include/BrylaGeometryczna.hh
@@ -30,6 +38,14 @@ CMakeFiles/program.dir/src/Graniastoslup.cpp.o
 CMakeFiles/program.dir/src/Macierz3x3.cpp.o
  /home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/Macierz3x3.cpp
 CMakeFiles/program.dir/src/Plaskowyz.cpp.o
+ ../include/BrylaGeometryczna.hh
+ ../include/Macierz.hh
+ ../include/Macierz3x3.hh
+ ../include/ObiektSceny.hh
+ ../include/Plaskowyz.hh
+ ../include/Wektor.hh
+ ../include/Wektor3D.hh
+ ../include/lacze_do_gnuplota.hh
  /home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/Plaskowyz.cpp
 CMakeFiles/program.dir/src/Prostopadloscian.cpp.o
  /home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/Prostopadloscian.cpp

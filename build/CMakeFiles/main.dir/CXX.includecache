@@ -27,6 +27,8 @@ unistd.h
 -
 ObiektSceny.hh
 ../include/ObiektSceny.hh
+memory
+-
 
 ../include/GoraZGrania.hh
 iostream

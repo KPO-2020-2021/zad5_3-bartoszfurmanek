@@ -13,6 +13,14 @@ CMakeFiles/program.dir/src/Dron.cpp.o: ../include/Wektor3D.hh
 CMakeFiles/program.dir/src/Dron.cpp.o: ../include/lacze_do_gnuplota.hh
 CMakeFiles/program.dir/src/Dron.cpp.o: ../src/Dron.cpp
 
+CMakeFiles/program.dir/src/GoraZGrania.cpp.o: ../include/BrylaGeometryczna.hh
+CMakeFiles/program.dir/src/GoraZGrania.cpp.o: ../include/GoraZGrania.hh
+CMakeFiles/program.dir/src/GoraZGrania.cpp.o: ../include/Macierz.hh
+CMakeFiles/program.dir/src/GoraZGrania.cpp.o: ../include/Macierz3x3.hh
+CMakeFiles/program.dir/src/GoraZGrania.cpp.o: ../include/ObiektSceny.hh
+CMakeFiles/program.dir/src/GoraZGrania.cpp.o: ../include/Wektor.hh
+CMakeFiles/program.dir/src/GoraZGrania.cpp.o: ../include/Wektor3D.hh
+CMakeFiles/program.dir/src/GoraZGrania.cpp.o: ../include/lacze_do_gnuplota.hh
 CMakeFiles/program.dir/src/GoraZGrania.cpp.o: ../src/GoraZGrania.cpp
 
 CMakeFiles/program.dir/src/GoraZeSzczytem.cpp.o: ../include/BrylaGeometryczna.hh
@@ -29,6 +37,14 @@ CMakeFiles/program.dir/src/Graniastoslup.cpp.o: ../src/Graniastoslup.cpp
 
 CMakeFiles/program.dir/src/Macierz3x3.cpp.o: ../src/Macierz3x3.cpp
 
+CMakeFiles/program.dir/src/Plaskowyz.cpp.o: ../include/BrylaGeometryczna.hh
+CMakeFiles/program.dir/src/Plaskowyz.cpp.o: ../include/Macierz.hh
+CMakeFiles/program.dir/src/Plaskowyz.cpp.o: ../include/Macierz3x3.hh
+CMakeFiles/program.dir/src/Plaskowyz.cpp.o: ../include/ObiektSceny.hh
+CMakeFiles/program.dir/src/Plaskowyz.cpp.o: ../include/Plaskowyz.hh
+CMakeFiles/program.dir/src/Plaskowyz.cpp.o: ../include/Wektor.hh
+CMakeFiles/program.dir/src/Plaskowyz.cpp.o: ../include/Wektor3D.hh
+CMakeFiles/program.dir/src/Plaskowyz.cpp.o: ../include/lacze_do_gnuplota.hh
 CMakeFiles/program.dir/src/Plaskowyz.cpp.o: ../src/Plaskowyz.cpp
 
 CMakeFiles/program.dir/src/Prostopadloscian.cpp.o: ../src/Prostopadloscian.cpp
