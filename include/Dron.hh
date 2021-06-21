@@ -10,6 +10,7 @@
 #include "lacze_do_gnuplota.hh"
 #include <unistd.h>
 #include "ObiektSceny.hh"
+#include <memory>
 
 
 
@@ -77,6 +78,7 @@ public:
  */
 Dron& operator=(Dron D);
 
+
 /*!
  *\brief Metoda uzyskujaca wektor3D reprezentujacy wspolrzedne polozenia drona.
  */
@@ -112,6 +114,16 @@ Dron(Wektor3D WspolPolozenie,double Kat, std::string Nazwa);
  *\brief Metoda zapisujaca wspolrzedne korpusu i rotorow do plikow z ich brylami.
  */
 bool ZapiszBryly()const;
+
+/*!
+ *\brief Metoda sprawdzajaca czy dron koliduje z obiektami listy przeskod
+ */
+bool SprawdzKolizyjnosc(std::list<std::shared_ptr<ObiektSceny>> &ListaPrzeszkod);
+
+/*!
+ *\brief Metoda przesuwajaca dron o zadany wektor.
+ */
+Dron& Translacja(Wektor3D Przesuniecie);
 
 /*!
  *\brief Metoda obracajaca dron o zadany kat wzgledem wlasnej osi Z.
@@ -159,7 +171,7 @@ bool UzyjWzorca();
  *\brief Metoda wyswietlajaca w sposob aniomowany obrot drona o zadany kat,
  * oraz jego przelot o zadana odleglosc.
  */
- bool PrzemiescDrona(double Odleglosc, double Kat, PzG::LaczeDoGNUPlota  &LaczeDoGnuplota);
+ bool PrzemiescDrona(double Odleglosc, double Kat, PzG::LaczeDoGNUPlota  &LaczeDoGnuplota, std::list<std::shared_ptr<ObiektSceny>> &ListaPrzeszkod);
 
 /*!
  *\brief Metoda wyswietlajaca w sposob aniomowany ruch drona po okregu o
@@ -171,6 +183,18 @@ bool UzyjWzorca();
  *\brief Metoda zwracajaca nazwe wybranej bryly obiektu sceny.
  */
  std::string WezNazweBryly(int NumerBryly)const;
+
+/*!
+ *\brief Metoda zwracajaca skale bryly.
+ *UWAGA: W przypadku klasy Dron metoda zwraca skale korpusu.
+ */
+ Wektor3D WezSkaleBryly()const;
+
+/*!
+ *\brief Metoda sluzaca do indeksowania punktow obiektu.
+ *UWAGA: W przypadku klasy dron metoda indeksuje korpus.
+ */
+ Wektor3D operator[](int Indeks)const;
 
 };
 

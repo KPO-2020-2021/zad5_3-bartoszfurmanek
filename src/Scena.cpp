@@ -272,7 +272,7 @@ for (std::list<std::shared_ptr<ObiektSceny>>::iterator Iter = ListaObiektow.begi
  */
  bool Scena::PrzemiescDrona(double Odleglosc, double Kat)
  {
- if(!(*this).AktywnyDron()->PrzemiescDrona(Odleglosc, Kat, Lacze))
+ if(!(*this).AktywnyDron()->PrzemiescDrona(Odleglosc, Kat, Lacze, ListaObiektow))
     {
     return false;
     }

@@ -113,9 +113,9 @@ public:
   Plaskowyz(const Plaskowyz &P);
 
   /*!
- * \brief Metoda sluzaca do obracania plaskowyzu o zadany kat wokol wybranej osi.
+ * \brief Metoda sluzaca do obracania plaskowyzu o zadany kat wokol osi z.
  */
-  Plaskowyz& Obrot(double Kat, char Os);
+  Plaskowyz& Obrot(double Kat);
 
 /*!
  * \brief Metoda sluzaca do przesuwania plaskowyzu o zadany wektor.
@@ -146,6 +146,11 @@ public:
  *\brief Metoda zwracajaca nazwe wybranej bryly obiektu sceny.
  */
   std::string WezNazweBryly(int NumerBryly)const;
+
+/*!
+ *\brief Metoda zwracajaca skale bryly.
+ */
+  Wektor3D WezSkaleBryly()const;
 
 
 };

@@ -30,6 +30,38 @@ ObiektSceny.hh
 memory
 -
 
+../include/GoraZGrania.hh
+iostream
+-
+Wektor3D.hh
+../include/Wektor3D.hh
+Macierz3x3.hh
+../include/Macierz3x3.hh
+BrylaGeometryczna.hh
+../include/BrylaGeometryczna.hh
+iomanip
+-
+fstream
+-
+ObiektSceny.hh
+../include/ObiektSceny.hh
+
+../include/GoraZeSzczytem.hh
+iostream
+-
+Wektor3D.hh
+../include/Wektor3D.hh
+Macierz3x3.hh
+../include/Macierz3x3.hh
+BrylaGeometryczna.hh
+../include/BrylaGeometryczna.hh
+iomanip
+-
+fstream
+-
+ObiektSceny.hh
+../include/ObiektSceny.hh
+
 ../include/Graniastoslup.hh
 iostream
 -
@@ -72,6 +104,22 @@ lacze_do_gnuplota.hh
 BrylaGeometryczna.hh
 ../include/BrylaGeometryczna.hh
 
+../include/Plaskowyz.hh
+iostream
+-
+Wektor3D.hh
+../include/Wektor3D.hh
+Macierz3x3.hh
+../include/Macierz3x3.hh
+BrylaGeometryczna.hh
+../include/BrylaGeometryczna.hh
+iomanip
+-
+fstream
+-
+ObiektSceny.hh
+../include/ObiektSceny.hh
+
 ../include/Prostopadloscian.hh
 iostream
 -
@@ -88,6 +136,22 @@ math.h
 iomanip
 -
 fstream
+-
+
+../include/Scena.hh
+Dron.hh
+../include/Dron.hh
+Plaskowyz.hh
+../include/Plaskowyz.hh
+GoraZeSzczytem.hh
+../include/GoraZeSzczytem.hh
+GoraZGrania.hh
+../include/GoraZGrania.hh
+lacze_do_gnuplota.hh
+../include/lacze_do_gnuplota.hh
+list
+-
+memory
 -
 
 ../include/Wektor.hh
@@ -117,4 +181,20 @@ Dron.hh
 /home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/Dron.hh
 Wektor3D.hh
 /home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/Wektor3D.hh
+
+/home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/GoraZGrania.cpp
+GoraZGrania.hh
+/home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/GoraZGrania.hh
+
+/home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/GoraZeSzczytem.cpp
+GoraZeSzczytem.hh
+/home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/GoraZeSzczytem.hh
+
+/home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/Plaskowyz.cpp
+Plaskowyz.hh
+/home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/Plaskowyz.hh
+
+/home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/Scena.cpp
+Scena.hh
+/home/bartoszfurmanek/Pulpit/Programowanie obiektowe/zad5_3-bartoszfurmanek/src/Scena.hh
 

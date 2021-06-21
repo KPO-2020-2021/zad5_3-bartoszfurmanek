@@ -79,13 +79,11 @@ Wektor3D& GoraZeSzczytem::operator [](int Indeks)
  */
   void GoraZeSzczytem::ObliczPolozenie()
   {
-      Polozenie = Wierzcholek[1];
-      Polozenie += Wierzcholek[5];
-      Polozenie += Wierzcholek[9];
+      Polozenie = Wierzcholek[9];
+      Polozenie += Wierzcholek[10];
       Polozenie += Wierzcholek[13];
-      Polozenie += Wierzcholek[17];
-      Polozenie += Wierzcholek[21];
-      Polozenie = (1.0/6)* Polozenie;
+      Polozenie += Wierzcholek[14];
+      Polozenie = 0.25 * Polozenie;
   }
 
   /*!
@@ -148,7 +146,7 @@ for(int i=0; i<16; i++)
     {
     Wierzcholek[i] = (*this).Skaluj(Wierzcholek[i]);
     }
-(*this).Obrot(Kat, 'z');
+(*this).Obrot(Kat);
 (*this).Translacja(WspolPolozenia);
 while(KatOrientacji<= -360 || KatOrientacji >= 360)     //Usuniecie okresowosci kata.
   {
@@ -180,17 +178,15 @@ BrylaGeometryczna(TB_GoraZeSzczytem, G.NazwaPlikuBryly(), G.NazwaPlikuBrylyWzorc
 }
 
 /*!
- * \brief Metoda służąca do obrotu gory o zadany kat wokol osi x,y,z.
- * UWAGA: Metoda nie sprawdza czy podano poprawna os (mozliwe opcje to x,y oraz z).
- *  \param[in] Kat - Kat obrotu.
- *  \param[in] Os - Os obrotu.
+ * \brief Metoda służąca do obrotu gory o zadany kat wokol osi z.
+ *  \param[in] Kat - Kat obrotu..
  *   \retval Obrocona gora.
  */
-GoraZeSzczytem& GoraZeSzczytem::Obrot(double Kat, char Os)
+GoraZeSzczytem& GoraZeSzczytem::Obrot(double Kat)
 {
     for(int i=0; i<16; i++)
     {
-    (*this)[i] = MacierzObrotu(Kat, Os) * (*this)[i];  //Wymnożenie każdego wierzcholka przez macierz obrotu
+    (*this)[i] = MacierzObrotu(Kat, 'z') * (*this)[i];  //Wymnożenie każdego wierzcholka przez macierz obrotu
     }               
     return *this;
 }
@@ -206,6 +202,7 @@ GoraZeSzczytem& GoraZeSzczytem::Translacja(Wektor3D Wektor)
     {
     (*this)[i] += Wektor;
     }
+    (*this).ObliczPolozenie();
     return (*this);
 }
 
@@ -326,4 +323,13 @@ std::string GoraZeSzczytem::WezNazweBryly(int NumerBryly)const
 {
   NumerBryly++;
   return (*this).NazwaPlikuBryly();
+}
+
+/*!
+ *\brief Metoda zwracajaca skale bryly.
+ *\retval Wektor 3D reprezentujacy skale bryly.
+ */
+Wektor3D GoraZeSzczytem::WezSkaleBryly()const
+{
+return (*this).SkalaBryly();
 }

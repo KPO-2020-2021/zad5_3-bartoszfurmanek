@@ -113,9 +113,9 @@ public:
   GoraZGrania(const GoraZGrania &G);
 
   /*!
- * \brief Metoda sluzaca do obracania gory z grania o zadany kat wokol wybranej osi.
+ * \brief Metoda sluzaca do obracania gory z grania o zadany kat wokol osi z.
  */
-  GoraZGrania& Obrot(double Kat, char Os);
+  GoraZGrania& Obrot(double Kat);
 
 /*!
  * \brief Metoda sluzaca do przesuwania gory z grania o zadany wektor.
@@ -146,6 +146,11 @@ public:
  *\brief Metoda zwracajaca nazwe wybranej bryly obiektu sceny.
  */
   std::string WezNazweBryly(int NumerBryly)const;
+
+/*!
+ *\brief Metoda zwracajaca skale bryly.
+ */
+  Wektor3D WezSkaleBryly()const;
 
 
 

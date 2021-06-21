@@ -2,6 +2,9 @@
 
 #include "Wektor3D.hh"
 
+#define PROMIEN_DRONA 12
+#define WYSOKOSC_LOTU 90
+
 /*!
  *\file
  *\brief Definicja metod dla klasy Dron.
@@ -23,6 +26,8 @@ Dron& Dron::operator= (Dron D)
   (*this).KatOrientacji = D.Orientacja();
   return (*this);
 }
+
+
 /*!
  *\brief Metoda uzyskujaca wektor3D reprezentujacy wspolrzedne polozenia drona.
  *\retval Wektor3D reprezentujacy wspolrzedne polozenia drona.
@@ -141,6 +146,91 @@ bool Dron::ZapiszBryly()const
         }
     return true;
 }
+/*!
+ *\brief Metoda sprawdzajaca czy dron koliduje z obiektami listy przeszkod.
+ *Metoda sprawdza czy polozenie drona nalezy do pola danej przeszkody poszezonego o promien drona.
+ *\param[in] ListaPrzeszkod - Lista zawierajaca obiekty sceny bedace przeszkodami.
+ *\retval True, jezeli dron nie koliduje z zadnymi przeszkodami, False w przeciwnym wypadku.
+ */
+bool Dron::SprawdzKolizyjnosc(std::list<std::shared_ptr<ObiektSceny>> &ListaPrzeszkod)
+{
+    Wektor3D PolozeniePrzeszkody;
+    bool ListaWarunkow[8];
+    int i;
+    for (std::list<std::shared_ptr<ObiektSceny>>::iterator Iter = ListaPrzeszkod.begin();  Iter != ListaPrzeszkod.end();  ++Iter)
+        {
+        if((*Iter)->WezNazweBryly(0)!=(*this).WezNazweBryly(0))             //Sprawdzenie czy obiekt nie jest aktywnym dronem
+            {
+            if((*Iter)->TypObiektu() == OB_Dron)                            //Sprawdzenie czy obiekt jest dronem
+                {
+                if(((*this).WspolPolozenia()-Wektor3D{0,0,WYSOKOSC_LOTU}).Odleglosc((*Iter)->WspolPolozenia())< 2*PROMIEN_DRONA)             //Sprawdzenie czy odleglosc miedzy dronami jest wieksza niz 2 promienie drona.                }
+                    {
+                    std::cout << std::endl << "Dron koliduje z dronem o polozeniu (x,y): " << (*Iter)->WspolPolozenia()[0] << " " << (*Iter)->WspolPolozenia()[1] << std::endl;
+                    return false;
+                    }
+                }
+            if((*Iter)->TypObiektu() == OB_Plaskowyz || (*Iter)->TypObiektu() == OB_GoraZGrania || (*Iter)->TypObiektu() == OB_GoraZeSzczytem)  // Sprawdzenie czy obiekt jest przeszkoda
+                {
+
+                PolozeniePrzeszkody = (*Iter)->WspolPolozenia();
+                (*Iter)->Translacja(-1*PolozeniePrzeszkody);        //Sprowadzenie drona i przeszkody do ukladu przeszkody
+                (*this).Translacja(-1*PolozeniePrzeszkody-Wektor3D{0,0,WYSOKOSC_LOTU});
+                
+                for(i=0; i<8; i++)
+                {
+                ListaWarunkow[i]=false;
+                }
+            
+                if(((*this).WspolPolozenia()[0] < ((*Iter)->WezSkaleBryly()[0]+PROMIEN_DRONA)) && ((*this).WspolPolozenia()[0] > ((-1)*(*Iter)->WezSkaleBryly()[0]-PROMIEN_DRONA)))
+                {
+                ListaWarunkow[0]=true;
+                }
+                if(((*this).WspolPolozenia()[1] < (*Iter)->WezSkaleBryly()[1]) && ((*this).WspolPolozenia()[1] > ((-1)*(*Iter)->WezSkaleBryly()[1])))
+                {
+                ListaWarunkow[1]=true;
+                }
+                if(((*this).WspolPolozenia()[1] < ((*Iter)->WezSkaleBryly()[1]+PROMIEN_DRONA)) && ((*this).WspolPolozenia()[1] > ((-1)*(*Iter)->WezSkaleBryly()[1]-PROMIEN_DRONA)))
+                {
+                ListaWarunkow[2]=true;
+                }
+                if(((*this).WspolPolozenia()[0] < (*Iter)->WezSkaleBryly()[0]) && ((*this).WspolPolozenia()[0] > ((-1)*(*Iter)->WezSkaleBryly()[0])))
+                {
+                ListaWarunkow[3]=true;
+                }
+                if((*this).WspolPolozenia().Odleglosc((*(*Iter))[9]) < PROMIEN_DRONA)
+                {
+                ListaWarunkow[4]=true;
+                }
+                if((*this).WspolPolozenia().Odleglosc((*(*Iter))[10]) < PROMIEN_DRONA)
+                {
+                ListaWarunkow[5]=true;
+                }
+                if((*this).WspolPolozenia().Odleglosc((*(*Iter))[13]) < PROMIEN_DRONA)
+                {
+                ListaWarunkow[6]=true;
+                }
+                if((*this).WspolPolozenia().Odleglosc((*(*Iter))[14]) < PROMIEN_DRONA)
+                {
+                ListaWarunkow[7]=true;
+                }
+            
+                
+                if((ListaWarunkow[0]&&ListaWarunkow[1])||(ListaWarunkow[2]&&ListaWarunkow[3])||ListaWarunkow[4]||ListaWarunkow[5]||ListaWarunkow[6]||ListaWarunkow[7])
+                    {
+                    std::cout << std::endl << "Dron koliduje z przeszkoda o polozeniu (x,y): " << PolozeniePrzeszkody[0] << " " << PolozeniePrzeszkody[1] << std::endl;
+                    (*this).Translacja(PolozeniePrzeszkody+Wektor3D{0,0,WYSOKOSC_LOTU});              //Sprowadzenie drona i przeszkody do ukladu globalnego
+                    (*Iter)->Translacja(PolozeniePrzeszkody);
+                    return false;
+                    }                
+                
+                (*this).Translacja(PolozeniePrzeszkody+Wektor3D{0,0,WYSOKOSC_LOTU});              //Sprowadzenie drona i przeszkody do ukladu globalnego
+                (*Iter)->Translacja(PolozeniePrzeszkody);
+                } 
+            }
+
+        }
+return true;
+}
 
 /*!
  *\brief Metoda transformujaca drona do ukladu wspolrzednych jego korpusu.
@@ -207,8 +297,25 @@ void Dron::Obrot(double Kat)
       KatOrientacji -=360;
     }    
   }
-
 }
+
+/*!
+ *\brief Metoda przesuwajaca dron o zadany wektor.
+ *\param[in] Przesuniecie - Wektor 3D, o jaki korpus drona oraz
+ * jego rotory maja zostac przesuniete.
+ */
+Dron& Dron::Translacja(Wektor3D Przesuniecie)
+{
+    Korpus.Translacja(Przesuniecie);
+    Rotor[0].Translacja(Przesuniecie);
+    Rotor[1].Translacja(Przesuniecie);
+    Rotor[2].Translacja(Przesuniecie);
+    Rotor[3].Translacja(Przesuniecie);
+    (*this).ObliczPolozenie();
+    return (*this);
+}
+
+
 /*!
  *\brief Metoda podnosi drona na dana wysokosc.
  *\param[in] Wysokosc - wysokosc na jaka drona ma zostac podniesiony
@@ -405,16 +512,24 @@ bool Dron::RysujTrasePoOkregu(double Promien, PzG::LaczeDoGNUPlota  &LaczeDoGnup
  * Jego przemieszenie odbywa sie w sposob animowany.
  * Dron podnosi sie, obraca o odpowiedni kat, przelatuje
  * o zadana odleglosc (Podczas przelotu jego rotory odpowiednio
- * wiruja), a na koniec opuszcza sie na plaszczyzne.
+ * wiruja),nastepnie sprawdza czy moze wyladowac,
+ * (jezeli nie wydluza trase), a na koniec opuszcza sie na plaszczyzne.
  * \param[in] Odlegosc - Dlugosc przelotu drona.
  * \param[in] Kat - kat obrotu drona.
  * \param[in] LaczeDoGnuplota - Lacze do gnuplota, ktore rysowac ruch drona
+ * \param[in] ListaObiektow - Lista obiektow znajdujacych sie na scenie, z ktorymi dron moze kolidowac.
  * \retval True, jezeli operacja wykona sie poprawnie
  * \retval False, jezeli podczas operacji wystapia bledy
  */
-bool Dron::PrzemiescDrona(double Odleglosc, double Kat, PzG::LaczeDoGNUPlota  &LaczeDoGnuplota)
+bool Dron::PrzemiescDrona(double Odleglosc, double Kat, PzG::LaczeDoGNUPlota  &LaczeDoGnuplota, std::list<std::shared_ptr<ObiektSceny>> &ListaPrzeszkod)
     {
         int i=0;
+
+        Wektor3D AktualnePolozenie;
+        Wektor3D PoczatkowePolozenie = (*this).WspolPolozenia();
+
+        double AktualnyKat;
+        double PoczatkowyKat = (*this).Orientacja();
 
         if(Odleglosc<0)
             {
@@ -430,7 +545,7 @@ bool Dron::PrzemiescDrona(double Odleglosc, double Kat, PzG::LaczeDoGNUPlota  &L
         usleep(3000000);
 
         std::cout << std::endl << "Podnoszonie drona..." << std::endl;  //Podnoszenie drona
-        for(i=0; i<90; i++)
+        for(i=0; i<WYSOKOSC_LOTU; i++)
             {
             (*this).Wzniesienie(1);
             (*this).ObrotRotora(0,10);
@@ -497,10 +612,47 @@ bool Dron::PrzemiescDrona(double Odleglosc, double Kat, PzG::LaczeDoGNUPlota  &L
             return false;
             }
         
-        
+        while(!(*this).SprawdzKolizyjnosc(ListaPrzeszkod))              //Sprawdzenie kolizyjnosci
+            {
+            std::cout <<std::endl << "NIE MOZNA WYLADOWAC" << std::endl;
+            LaczeDoGnuplota.UsunOstatniaNazwe();
+            AktualnePolozenie=(*this).WspolPolozenia();
+            AktualnyKat=(*this).Orientacja();
+            (*this).WspolPolozenia()=PoczatkowePolozenie;
+            (*this).Orientacja()=PoczatkowyKat;
+            std::cout <<std::endl << "Przedluzanie trasy..." << std::endl;     //Rysowanie trasy
+            usleep(500000);
+            Odleglosc+=20;
+            if(!(*this).RysujTrase(Odleglosc, Kat, LaczeDoGnuplota))
+                {
+                throw std::runtime_error("Blad zapisu trasy");
+                return false;
+                }
+            (*this).WspolPolozenia()=AktualnePolozenie;
+            (*this).Orientacja()=AktualnyKat;
+            usleep(500000);
+            for(i=0; i<20; i++)
+            {
+            (*this).Przemieszczenie(1);
+            (*this).ObrotRotora(0,10);
+            (*this).ObrotRotora(1,-10);
+            (*this).ObrotRotora(2,-10);
+            (*this).ObrotRotora(3,10);
+            if(!(*this).ZapiszBryly())
+                {
+                return false;
+                }
+            LaczeDoGnuplota.Rysuj();
+            usleep(40000);
+            }
+        if(!(*this).UzyjWzorca())
+            {
+            return false;
+            }
+            }
 
         std::cout << std::endl << "Opadanie drona..." << std::endl;  //Opadanie
-        for(i=0; i<90; i++)
+        for(i=0; i<WYSOKOSC_LOTU; i++)
             {
             (*this).Opadanie(1);
             (*this).ObrotRotora(0,7.5);
@@ -568,7 +720,7 @@ bool Dron::RuchPoOkregu(double Promien, PzG::LaczeDoGNUPlota  &LaczeDoGnuplota)
         usleep(3000000);
 
         std::cout << std::endl << "Podnoszonie drona..." << std::endl;  //Podnoszenie drona
-        for(i=0; i<90; i++)
+        for(i=0; i<WYSOKOSC_LOTU; i++)
             {
             (*this).Wzniesienie(1);
             (*this).ObrotRotora(0,10);
@@ -710,7 +862,7 @@ bool Dron::RuchPoOkregu(double Promien, PzG::LaczeDoGNUPlota  &LaczeDoGnuplota)
             
 
         std::cout << std::endl << "Opadanie drona..." << std::endl;  //Opadanie
-        for(i=0; i<90; i++)
+        for(i=0; i<WYSOKOSC_LOTU; i++)
             {
             (*this).Opadanie(1);
             (*this).ObrotRotora(0,7.5);
@@ -761,4 +913,14 @@ else
     {
     throw std::runtime_error("Blad: Zly numer bryly");
     }
+}
+
+Wektor3D Dron::WezSkaleBryly()const
+{
+    return Korpus.SkalaBryly();
+}
+
+Wektor3D Dron::operator[](int Indeks)const
+{
+    return Korpus[Indeks];
 }

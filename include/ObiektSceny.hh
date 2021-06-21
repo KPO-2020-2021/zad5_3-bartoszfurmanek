@@ -61,6 +61,33 @@ class ObiektSceny{
  */
  virtual std::string WezNazweBryly(int NumerBryly)const=0;
 
+/*!
+ *\brief Metoda zwracajaca polozenie wybranego obiektu.
+ */
+ virtual Wektor3D WspolPolozenia()const=0;
+
+/*!
+ *\brief Metoda zwracajaca kat orientacji wybranego obiektu.
+ */
+ virtual double Orientacja()const=0;
+
+/*!
+ *\brief Metoda przesuwajaca obiekt o zadany wektor.
+ */
+ virtual ObiektSceny& Translacja(Wektor3D Przesuniecie)=0;
+
+/*!
+ *\brief Metoda zwracajaca skale bryly.
+ *UWAGA: W przypadku klasy Dron metoda zwraca skale korpusu.
+ */
+ virtual Wektor3D WezSkaleBryly()const=0;
+
+/*!
+ *\brief Metoda sluzaca do indeksowania punktow obiektu.
+ *UWAGA: W przypadku klasy dron metoda indeksuje korpus.
+ */
+ virtual Wektor3D operator[](int Indeks)const=0;
+
 
 
 

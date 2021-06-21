@@ -113,9 +113,9 @@ public:
   GoraZeSzczytem(const GoraZeSzczytem &G);
 
   /*!
- * \brief Metoda sluzaca do obracania gory ze szczytem o zadany kat wokol wybranej osi.
+ * \brief Metoda sluzaca do obracania gory ze szczytem o zadany kat wokol osi z.
  */
-  GoraZeSzczytem& Obrot(double Kat, char Os);
+  GoraZeSzczytem& Obrot(double Kat);
 
 /*!
  * \brief Metoda sluzaca do przesuwania gory ze szczytem o zadany wektor.
@@ -146,6 +146,11 @@ public:
  *\brief Metoda zwracajaca nazwe wybranej bryly obiektu sceny.
  */
   std::string WezNazweBryly(int NumerBryly)const;
+
+/*!
+ *\brief Metoda zwracajaca skale bryly.
+ */
+  Wektor3D WezSkaleBryly()const;
 
 
 

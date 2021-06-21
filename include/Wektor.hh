@@ -365,9 +365,9 @@ template<int Wymiar>
 double Wektor<Wymiar>::Odleglosc(Wektor<Wymiar> W)const
 {
 double Wynik=0;
-for(int i=-1; i<Wymiar; ++i)
+for(int i=0; i<Wymiar; i++)
     {
-    Wynik += pow(((*this)[i]-W[i]),2);
+    Wynik += (((*this)[i]-W[i])*((*this)[i]-W[i]));
     }
 Wynik = sqrt(Wynik);
 return Wynik;
